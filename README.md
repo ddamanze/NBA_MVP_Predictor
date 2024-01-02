@@ -1,1 +1,1 @@
-# CreditCardApproval
+# NBA MVP Predictor
