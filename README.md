@@ -12,6 +12,7 @@ Table of Contents
 - [2023-2024 Predictions](#2023-2024-predictions)
 - [Dependencies](#dependencies)
 - [How to Use](#how-to-use)
+  
 Introduction
 The goal of this project is to predict the NBA MVP for a given season based on player performance statistics. The script uses machine learning techniques, specifically XGBoost and Random Forest, to make predictions. The models are trained on historical data, and their accuracy is evaluated against actual MVP winners.
 
@@ -45,7 +46,7 @@ imbalanced-learn
 xgboost
 requests
 BeautifulSoup
-Install these dependencies using pip install <library>.
+Install these dependencies using pip install <library>
 
 ## How to Use
 Ensure all dependencies are installed.
