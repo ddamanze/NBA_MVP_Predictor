@@ -38,15 +38,15 @@ The final section of the script focuses on making predictions for the 2023-2024 
 The script requires the following Python libraries:
 
 pandas
-numpy
-matplotlib
-seaborn
-scikit-learn
-imbalanced-learn
-xgboost
-requests
-BeautifulSoup
-Install these dependencies using pip install <library>
+numpy <br>
+matplotlib <br>
+seaborn <br>
+scikit-learn <br>
+imbalanced-learn <br>
+xgboost <br>
+requests <br>
+BeautifulSoup <br>
+Install these dependencies using pip install <library> <br>
 
 ## How to Use
 Ensure all dependencies are installed.
