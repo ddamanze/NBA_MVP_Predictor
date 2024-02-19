@@ -213,12 +213,11 @@ seasons = smote_df["season"].unique()
 szn = smote_df["season"].head(1)
 results_table = pd.DataFrame(columns=["Season", "RF MAE", "XGBoost MAE"])
 for season in seasons:
-  #print(season)
+  print(season)
   tr = train_data[train_info["season"] != season]
   targ = target[train_info["season"] != season]
   rf_regressor = RandomForestRegressor(max_depth=7, random_state=0)
   rf_regressor.fit(tr,targ.values.ravel())
-  # what is ravel?
   xgb = XGBRegressor()
   xgb.fit(tr, targ.values.ravel())
   test_x = train_data[(train_info["season"] == season) & (~train_info["is_smote"])]
@@ -229,9 +228,9 @@ for season in seasons:
   xgb_mae = np.mean(np.absolute(xgb_y_pred - test_y.to_numpy()[:,0]))
   baseline_results = pd.DataFrame({"Season": season, "RF MAE": rf_mae, "XGBoost MAE": xgb_mae}, index=[0])
   results_table = pd.concat([results_table, baseline_results], ignore_index=True)
-  #print(f"Random Forest MAE: {rf_mae}")
-  #print(f"XGBoost MAE: {xgb_mae}")
-  #baseline_results.append([season, rf_mae, xgb_mae])
+  print(f"Random Forest MAE: {rf_mae}")
+  print(f"XGBoost MAE: {xgb_mae}")
+  baseline_results.append([season, rf_mae, xgb_mae])
 results_table.loc[:, "Best MAE"] = results_table.apply(lambda x: "Random Forest" if x["RF MAE"] < x["XGBoost MAE"] else "XGBoost", axis=1)
 print(results_table)
 print("*"*80)
@@ -278,8 +277,6 @@ print("Model Accuracy: ")
 print(f"True percentage: {true_percentage: .2f}%")
 print(f"False percentage: {false_percentage: .2f}%")
 
-"""### Use one hot encode to say if they won it the previous year
-
 Import 2023-2024 Data from Basketball Reference
 """
 
@@ -298,12 +295,11 @@ if response.status_code == 200:
   # Find the HTML elements containing the player stats
   player_stats_table = soup.find("table", {"id": "per_game_stats"})
 
-  # Extract the data from the table (you'll need to adapt this based on the table structure)
+  # Extract the data from the table
   for row in player_stats_table.find("tbody").find_all("tr"):
     columns = row.find_all(["th","td"])
     player_name = columns[1].text.strip()
     other_columns = [col.text.strip() for col in columns[2:30]]
-    #points_per_game = columns[28].text.strip()
     player_dict = {"Player": player_name}
     for i, col_text in enumerate(other_columns):
       player_dict[f"Column_{i+1}"] = col_text
@@ -329,12 +325,11 @@ if response.status_code == 200:
   # Find the HTML elements containing the player stats
   player_stats_table = soup.find("table", {"id": "advanced_stats"})
 
-  # Extract the data from the table (you'll need to adapt this based on the table structure)
+  # Extract the data from the table
   for row in player_stats_table.find("tbody").find_all("tr"):
     columns = row.find_all(["th","td"])
     player_name = columns[1].text.strip()
     other_columns = [col.text.strip() for col in columns[6:29]]
-    #points_per_game = columns[28].text.strip()
     player_dict = {"Player": player_name}
     for i, col_text in enumerate(other_columns):
       player_dict[f"Column_{i+1}"] = col_text
@@ -366,7 +361,6 @@ if response.status_code == 200:
     columns = row.find_all(["th","td"])
     team_name = columns[1].text.strip()
     other_columns = [col.text.strip() for col in columns[3:5]+columns[7:9]]
-    #points_per_game = columns[28].text.strip()
     team_dict = {"Team": team_name}
     for i, col_text in enumerate(other_columns):
       team_dict[f"Column_{i+1}"] = col_text
@@ -447,19 +441,12 @@ test_info = ["player", "gs","pos", "age", "team_id", "pts_per_g", "tr_per_g", "a
 xgb_ty_pred = xgb.predict(ty_test)
 mvp_winner_pred = merged_df.iloc[np.argsort(xgb_ty_pred)[-1:]]
 top_two = merged_df.iloc[np.argsort(xgb_ty_pred)[-10:]]
-#actual_mvp_winner = train_info[(train_info["season"] == season) & (~train_info["is_smote"])].sort_values("award_share", ascending=False).head(1)
-#print(f"MAE: {xgb_mae}")
 pred_player = mvp_winner_pred["player"].to_string(index=False)
 merged_df["award_share"] = xgb_ty_pred
 top_two_info = top_two[test_info].sort_values(by="award_share", ascending=False)
-#actual_player = actual_mvp_winner["player"].to_string(index=False)
 predicted_share = mvp_winner_pred["award_share"].to_string(index=False)
-#T_F = pred_player == actual_player
 print(f"Predicted MVP Winner: {pred_player}")
 print(f"Predicted Award Share: {predicted_share}")
 print()
 print(f"Top Two: ")
 print(top_two_info)
-#print(merged_df)
-
-"""go back and add all the other cutoffs, and include mov, adj mov and win loss pct"""
