@@ -439,11 +439,11 @@ ty_test = merged_df[columns_ty]
 test_info = ["player", "gs","pos", "age", "team_id", "pts_per_g", "tr_per_g", "ast_per_g", "award_share"]
 
 xgb_ty_pred = xgb.predict(ty_test)
-mvp_winner_pred = merged_df.iloc[np.argsort(xgb_ty_pred)[-1:]]
-top_two = merged_df.iloc[np.argsort(xgb_ty_pred)[-10:]]
-pred_player = mvp_winner_pred["player"].to_string(index=False)
 merged_df["award_share"] = xgb_ty_pred
-top_two_info = top_two[test_info].sort_values(by="award_share", ascending=False)
+mvp_winner_pred = merged_df.iloc[np.argsort(xgb_ty_pred)[-1:]]
+top_two = merged_df.iloc[np.argsort(xgb_ty_pred)[-2:]]
+pred_player = mvp_winner_pred["player"].to_string(index=False)
+top_two_info = top_two[test_info].sort_values(by='award_share', ascending=False)
 predicted_share = mvp_winner_pred["award_share"].to_string(index=False)
 print(f"Predicted MVP Winner: {pred_player}")
 print(f"Predicted Award Share: {predicted_share}")
