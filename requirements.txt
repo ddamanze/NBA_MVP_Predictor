@@ -5,4 +5,4 @@ Seaborn
 Streamlit
 Plotly
 imblearn
-XGBRegressor
+xgboost
