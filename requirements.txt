@@ -1,6 +1,6 @@
 Pandas
 Numpy
-Maplotlib
+Matplotlib
 Seaborn
 Streamlit
 Plotly
