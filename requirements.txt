@@ -6,3 +6,4 @@ Streamlit
 Plotly
 imblearn
 xgboost
+bs4
