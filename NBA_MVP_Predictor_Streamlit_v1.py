@@ -746,107 +746,13 @@ nba_tm_advanced_df = nba_advanced_df[nba_advanced_df_columns]
 
 # In[ ]:
 
-
-from PIL import Image
 import os
 
 
 # In[ ]:
 
 
-nba_logo_folder = '/Users/ddamanze/Downloads/NBA Logos'
-
-
-# In[ ]:
-
-
-image_filenames = [
-    'ATL.png',  # Atlanta Hawks
-    'BOS.png',  # Boston Celtics
-    'BKN.png',  # Brooklyn Nets
-    'CHA.png',  # Charlotte Hornets
-    'CHI.png',  # Chicago Bulls
-    'CLE.png',  # Cleveland Cavaliers
-    'DAL.png',  # Dallas Mavericks
-    'DEN.png',  # Denver Nuggets
-    'DET.png',  # Detroit Pistons
-    'GSW.png',  # Golden State Warriors
-    'HOU.png',  # Houston Rockets
-    'IND.png',  # Indiana Pacers
-    'LAC.png',  # Los Angeles Clippers
-    'LAL.png',  # Los Angeles Lakers
-    'MEM.png',  # Memphis Grizzlies
-    'MIA.png',  # Miami Heat
-    'MIL.png',  # Milwaukee Bucks
-    'MIN.png',  # Minnesota Timberwolves
-    'NOP.png',  # New Orleans Pelicans
-    'NYK.png',  # New York Knicks
-    'OKC.png',  # Oklahoma City Thunder
-    'ORL.png',  # Orlando Magic
-    'PHI.png',  # Philadelphia 76ers
-    'PHX.png',  # Phoenix Suns
-    'POR.png',  # Portland Trail Blazers
-    'SAC.png',  # Sacramento Kings
-    'SAS.png',  # San Antonio Spurs
-    'TOR.png',  # Toronto Raptors
-    'UTA.png',  # Utah Jazz
-    'WAS.png'   # Washington Wizards
-]
-
-
-# In[ ]:
-
-
-def read_image(image_path):
-    img = Image.open(image_path)
-    return img
-
-
-# In[ ]:
-
-
-#logos = {team_id: read_image(os.path.join(nba_logo_folder, team_id + '.png')) for team_id in nba_advanced_df['team_id']}
-
-
-# In[ ]:
-
-
-logos = {}
-for team_id in nba_advanced_df['team_id']:
-    image_path = os.path.join(nba_logo_folder, team_id + '.png')
-    if os.path.exists(image_path):
-        logos[team_id] = read_image(image_path)
-    else:
-        st.write(f"Image not found: {image_path}")
-
-
-# In[ ]:
-
-
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
-
-
-# In[ ]:
-
-
-#with st.expander("2023-2024 Team Performance"):
-    #x = nba_advanced_df["ortg"]
-    #y = nba_advanced_df["drtg"]
-    #fig6, ax = plt.subplots(figsize=(10,6))
-    #for i, row in nba_advanced_df.iterrows():
-     #   ax.annotate(row["team_id"], (row["ortg"], row["drtg"]))
-    #colors = np.random.rand(30)
-    #sns.scatterplot(x=x, y=y, alpha = 0.7, ax=ax, c = colors, cmap = 'viridis')
-    #ax.set_xlim(nba_advanced_df['ortg'].min() - 0.05, nba_advanced_df['ortg'].max() + 0.05)
-    #ax.set_ylim(nba_advanced_df['drtg'].min() - 0.05, nba_advanced_df['drtg'].max() + 0.05)
-    #ax.invert_yaxis()
-    #ax.set_xlabel('ORTG')
-    #ax.set_ylabel('DRTG')
-   # ax.set_title('Scatter Plot with NBA Team Logos')
-  #  fig6 = plt.gcf()
- #   st.plotly_chart(fig6)
-#
-#    st.write(nba_advanced_df)
 
 
 # In[ ]:
