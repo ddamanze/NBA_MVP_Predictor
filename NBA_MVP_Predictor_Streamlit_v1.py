@@ -833,10 +833,21 @@ test_info = ["player", "gs","pos", "age", "team_id", "pts_per_g", "tr_per_g", "a
 
 
 # In[ ]:
-tr = train_data[train_info["season"] != season]
-targ = target[train_info["season"] != season]
 xgb = XGBRegressor()
-xgb.fit(tr, targ.values.ravel())
+for season in seasons:
+  print(season)
+  tr = train_data[train_info["season"] != season]
+  targ = target[train_info["season"] != season]
+  xgb = XGBRegressor()
+  xgb.fit(tr, targ.values.ravel())
+  test_x = train_data[(train_info["season"] == season) & (~train_info["is_smote"])]
+  test_y = target[(train_info["season"] == season) & (~train_info["is_smote"])]
+  xgb_y_pred = xgb.predict(test_x)
+  xgb_mae = np.mean(np.absolute(xgb_y_pred - test_y.to_numpy()[:,0]))
+  top_two = train_info.iloc[np.argsort(xgb_y_pred)[-2:]]
+  mvp_winner_pred = train_info[(train_info["season"] == season) & (~train_info["is_smote"])].iloc[np.argsort(xgb_y_pred)[-1:]]
+  actual_mvp_winner = train_info[(train_info["season"] == season) & (~train_info["is_smote"])].sort_values("award_share", ascending=False).head(1)
+    
 xgb_ty_pred = xgb.predict(ty_test)
 merged_df["award_share"] = xgb_ty_pred
 mvp_winner_pred = merged_df.iloc[np.argsort(xgb_ty_pred)[-1:]]
