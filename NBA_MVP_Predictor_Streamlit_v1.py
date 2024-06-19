@@ -477,22 +477,6 @@ target = smote_df[["award_share"]]
 # In[47]:
 
 
-from sklearn.metrics import r2_score
-from sklearn.metrics import mean_squared_error as mse
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
-from xgboost import XGBRegressor
-
-
-# In[ ]:
-
-
-seasons = smote_df["season"].unique()
-szn = smote_df["season"].head(1)
-results_table = pd.DataFrame(columns=["Season", "RF MAE", "XGBoost MAE"])
-
-
-# In[ ]:
 
 # Import 2023-2024 Data from Basketball Reference
 
@@ -831,9 +815,51 @@ ty_test = merged_df[columns_ty]
 
 test_info = ["player", "gs","pos", "age", "team_id", "pts_per_g", "tr_per_g", "ast_per_g", "award_share"]
 
+from sklearn.metrics import r2_score
+from sklearn.metrics import mean_squared_error as mse
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+from xgboost import XGBRegressor
+
 
 # In[ ]:
-xgb = XGBRegressor()
+
+
+seasons = smote_df["season"].unique()
+szn = smote_df["season"].head(1)
+results_table = pd.DataFrame(columns=["Season", "RF MAE", "XGBoost MAE"])
+for season in seasons:
+  #print(season)
+  tr = train_data[train_info["season"] != season]
+  targ = target[train_info["season"] != season]
+  rf_regressor = RandomForestRegressor(max_depth=7, random_state=0)
+  rf_regressor.fit(tr,targ.values.ravel())
+  # what is ravel?
+  xgb = XGBRegressor()
+  xgb.fit(tr, targ.values.ravel())
+  test_x = train_data[(train_info["season"] == season) & (~train_info["is_smote"])]
+  test_y = target[(train_info["season"] == season) & (~train_info["is_smote"])]
+  rf_y_pred = rf_regressor.predict(test_x)
+  xgb_y_pred = xgb.predict(test_x)
+  rf_mae = np.mean(np.absolute(rf_y_pred - test_y.to_numpy()[:,0]))
+  xgb_mae = np.mean(np.absolute(xgb_y_pred - test_y.to_numpy()[:,0]))
+  baseline_results = pd.DataFrame({"Season": season, "RF MAE": rf_mae, "XGBoost MAE": xgb_mae}, index=[0])
+  results_table = pd.concat([results_table, baseline_results], ignore_index=True)
+  #print(f"Random Forest MAE: {rf_mae}")
+  #print(f"XGBoost MAE: {xgb_mae}")
+  #baseline_results.append([season, rf_mae, xgb_mae])
+results_table.loc[:, "Best MAE"] = results_table.apply(lambda x: "Random Forest" if x["RF MAE"] < x["XGBoost MAE"] else "XGBoost", axis=1)
+print(results_table)
+print("*"*80)
+print("Model with the most accuracy")
+print(results_table["Best MAE"].value_counts())
+
+
+# In[ ]:
+
+seasons = smote_df["season"].unique()
+szn = smote_df["season"].head(1)
+accuracy_list = []
 for season in seasons:
   print(season)
   tr = train_data[train_info["season"] != season]
@@ -847,6 +873,29 @@ for season in seasons:
   top_two = train_info.iloc[np.argsort(xgb_y_pred)[-2:]]
   mvp_winner_pred = train_info[(train_info["season"] == season) & (~train_info["is_smote"])].iloc[np.argsort(xgb_y_pred)[-1:]]
   actual_mvp_winner = train_info[(train_info["season"] == season) & (~train_info["is_smote"])].sort_values("award_share", ascending=False).head(1)
+  print(f"MAE: {xgb_mae}")
+  pred_player = mvp_winner_pred["player"].to_string(index=False)
+  actual_player = actual_mvp_winner["player"].to_string(index=False)
+  predicted_share = mvp_winner_pred["award_share"].to_string(index=False)
+  T_F = pred_player == actual_player
+  print(f"Predicted MVP Winner: {pred_player}")
+  print(f"Predicted Award Share: {predicted_share}")
+  print()
+  print("Actual Top Two Vote Getters: ")
+  print(train_info[(train_info["season"] == season) & (~train_info["is_smote"])].sort_values("award_share", ascending=False).head(2))
+  print()
+  print(f"Actual MVP Winner: {actual_player}")
+  print(f"MVP prediction was correct?: {T_F}")
+  print("*"*80)
+  accuracy_list.append(T_F)
+results_series = pd.Series(accuracy_list)
+true_percentage = (results_series.sum() / len(results_series)) * 100
+false_percentage = 100 - true_percentage
+print("Model Accuracy: ")
+print(f"True percentage: {true_percentage: .2f}%")
+print(f"False percentage: {false_percentage: .2f}%")
+
+# In[ ]:
     
 xgb_ty_pred = xgb.predict(ty_test)
 merged_df["award_share"] = xgb_ty_pred
