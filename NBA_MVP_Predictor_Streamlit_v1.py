@@ -493,12 +493,7 @@ results_table = pd.DataFrame(columns=["Season", "RF MAE", "XGBoost MAE"])
 
 
 # In[ ]:
-for season in seasons:
-  #print(season)
-    tr = train_data[train_info["season"] != season]
-    targ = target[train_info["season"] != season]
-    xgb = XGBRegressor()
-    xgb.fit(tr, targ.values.ravel())
+
 # Import 2023-2024 Data from Basketball Reference
 
 # In[ ]:
@@ -838,8 +833,10 @@ test_info = ["player", "gs","pos", "age", "team_id", "pts_per_g", "tr_per_g", "a
 
 
 # In[ ]:
-
-
+tr = train_data[train_info["season"] != season]
+targ = target[train_info["season"] != season]
+xgb = XGBRegressor()
+xgb.fit(tr, targ.values.ravel())
 xgb_ty_pred = xgb.predict(ty_test)
 merged_df["award_share"] = xgb_ty_pred
 mvp_winner_pred = merged_df.iloc[np.argsort(xgb_ty_pred)[-1:]]
