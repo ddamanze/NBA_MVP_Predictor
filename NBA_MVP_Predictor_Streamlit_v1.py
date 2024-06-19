@@ -490,31 +490,6 @@ from xgboost import XGBRegressor
 seasons = smote_df["season"].unique()
 szn = smote_df["season"].head(1)
 results_table = pd.DataFrame(columns=["Season", "RF MAE", "XGBoost MAE"])
-for season in seasons:
-  #print(season)
-  tr = train_data[train_info["season"] != season]
-  targ = target[train_info["season"] != season]
-  rf_regressor = RandomForestRegressor(max_depth=7, random_state=0)
-  rf_regressor.fit(tr,targ.values.ravel())
-  # what is ravel?
-  xgb = XGBRegressor()
-  xgb.fit(tr, targ.values.ravel())
-  test_x = train_data[(train_info["season"] == season) & (~train_info["is_smote"])]
-  test_y = target[(train_info["season"] == season) & (~train_info["is_smote"])]
-  rf_y_pred = rf_regressor.predict(test_x)
-  xgb_y_pred = xgb.predict(test_x)
-  rf_mae = np.mean(np.absolute(rf_y_pred - test_y.to_numpy()[:,0]))
-  xgb_mae = np.mean(np.absolute(xgb_y_pred - test_y.to_numpy()[:,0]))
-  baseline_results = pd.DataFrame({"Season": season, "RF MAE": rf_mae, "XGBoost MAE": xgb_mae}, index=[0])
-  results_table = pd.concat([results_table, baseline_results], ignore_index=True)
-  #print(f"Random Forest MAE: {rf_mae}")
-  #print(f"XGBoost MAE: {xgb_mae}")
-  #baseline_results.append([season, rf_mae, xgb_mae])
-results_table.loc[:, "Best MAE"] = results_table.apply(lambda x: "Random Forest" if x["RF MAE"] < x["XGBoost MAE"] else "XGBoost", axis=1)
-print(results_table)
-print("*"*80)
-print("Model with the most accuracy")
-print(results_table["Best MAE"].value_counts())
 
 
 # XGBoost has better accuracy than Random Forest
