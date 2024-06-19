@@ -525,40 +525,6 @@ print(results_table["Best MAE"].value_counts())
 seasons = smote_df["season"].unique()
 szn = smote_df["season"].head(1)
 accuracy_list = []
-for season in seasons:
-  print(season)
-  tr = train_data[train_info["season"] != season]
-  targ = target[train_info["season"] != season]
-  xgb = XGBRegressor()
-  xgb.fit(tr, targ.values.ravel())
-  test_x = train_data[(train_info["season"] == season) & (~train_info["is_smote"])]
-  test_y = target[(train_info["season"] == season) & (~train_info["is_smote"])]
-  xgb_y_pred = xgb.predict(test_x)
-  xgb_mae = np.mean(np.absolute(xgb_y_pred - test_y.to_numpy()[:,0]))
-  top_two = train_info.iloc[np.argsort(xgb_y_pred)[-2:]]
-  mvp_winner_pred = train_info[(train_info["season"] == season) & (~train_info["is_smote"])].iloc[np.argsort(xgb_y_pred)[-1:]]
-  actual_mvp_winner = train_info[(train_info["season"] == season) & (~train_info["is_smote"])].sort_values("award_share", ascending=False).head(1)
-  print(f"MAE: {xgb_mae}")
-  pred_player = mvp_winner_pred["player"].to_string(index=False)
-  actual_player = actual_mvp_winner["player"].to_string(index=False)
-  predicted_share = mvp_winner_pred["award_share"].to_string(index=False)
-  T_F = pred_player == actual_player
-  print(f"Predicted MVP Winner: {pred_player}")
-  print(f"Predicted Award Share: {predicted_share}")
-  print()
-  print("Actual Top Two Vote Getters: ")
-  print(train_info[(train_info["season"] == season) & (~train_info["is_smote"])].sort_values("award_share", ascending=False).head(2))
-  print()
-  print(f"Actual MVP Winner: {actual_player}")
-  print(f"MVP prediction was correct?: {T_F}")
-  print("*"*80)
-  accuracy_list.append(T_F)
-results_series = pd.Series(accuracy_list)
-true_percentage = (results_series.sum() / len(results_series)) * 100
-false_percentage = 100 - true_percentage
-print("Model Accuracy: ")
-print(f"True percentage: {true_percentage: .2f}%")
-print(f"False percentage: {false_percentage: .2f}%")
 
 
 # Import 2023-2024 Data from Basketball Reference
