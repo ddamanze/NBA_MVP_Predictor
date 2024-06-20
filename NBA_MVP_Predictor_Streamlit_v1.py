@@ -699,7 +699,7 @@ with st.expander("2023-2024 Team Performance"):
 
     # Customize the layout
     fig6.update_layout(
-        title = "Scatter Plot with NBA Team Logos",
+        title = "Offensive and Defensive Team Ratings",
         xaxis_title="ORTG",
         yaxis_title="DRTG",
         yaxis=dict(autorange="reversed"), # Invert y-axis
