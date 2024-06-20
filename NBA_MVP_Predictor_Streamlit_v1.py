@@ -825,14 +825,13 @@ from xgboost import XGBRegressor
 # In[ ]:
 
 
-
-tr = train_data[train_info["season"] != season]
-targ = target[train_info["season"] != season]
+seasons = smote_df["season"].unique()
+for season in seasons:
+    tr = train_data[train_info["season"] != season]
+    targ = target[train_info["season"] != season]
 
 xgb = XGBRegressor()
 xgb.fit(tr, targ.values.ravel())
-xgb_y_pred = xgb.predict(test_x)
-
 
 # In[ ]:
 
