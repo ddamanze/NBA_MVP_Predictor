@@ -34,7 +34,7 @@ filtered_data = data[data['season'] == selected_year]
 filtered_data = filtered_data.sort_values(by=["award_share"], ascending=False)
 st.write(f'Data for the year {selected_year}:')
 st.write(filtered_data)
-st.write("Summary Statistics:")
+st.write(f'{selected_year} Summary Statistics:')
 st.write(filtered_data.describe())
 
 # In[4]:
