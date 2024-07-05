@@ -43,8 +43,8 @@ st.write(filtered_data.describe())
 with st.expander("Player Search"):
     selected_player = st.text_input('Type a player to see their career stats').lower()
     filtered_player = data[data['player'] == selected_player]
-    filtered_player = filtered_player.sort_values(by=["season"])
-    st.write(filtered_player)
+    #filtered_player = filtered_player.sort_values(by=["season"])
+    st.write(filtered_player).sort_values(by=["season"])
 
 
 # In[5]:
