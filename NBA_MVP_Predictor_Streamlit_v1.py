@@ -28,6 +28,10 @@ data = pd.read_csv("https://raw.githubusercontent.com/ddamanze/NBA_MVP_Predictor
 
 
 st.title("Data Overview - Player Stats 1982-2022")
+st.write(data)
+st.write('Summary Statistics:')
+st.write(data.describe())
+
 #data['season'] = data['season'].apply(lambda x: '{:.0f}'.format(x))
 selected_year = st.selectbox('Select a season', options = data['season'].unique())
 filtered_data = data[data['season'] == selected_year]
@@ -40,15 +44,15 @@ st.write(filtered_data.describe())
 # In[4]:
 
 
-selected_player = st.text_input('Type a player to see their career stats').lower()
-if selected_player:
-    filtered_player = data[data['player'] == selected_player]
-    if not filtered_player.empty:
-        st.write(filtered_player)
-    else:
-        st.write("No player found with the name:", selected_player)
-else:
-    st.write("Please enter a player's name.")
+#selected_player = st.text_input('Type a player to see their career stats').lower()
+#if selected_player:
+#    filtered_player = data[data['player'] == selected_player]
+#    if not filtered_player.empty:
+#        st.write(filtered_player)
+#    else:
+#        st.write("No player found with the name:", selected_player)
+#else:
+#    st.write("Please enter a player's name.")
 
 
 # In[5]:
