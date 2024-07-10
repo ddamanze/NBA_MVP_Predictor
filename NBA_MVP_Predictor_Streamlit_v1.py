@@ -94,10 +94,10 @@ data["was_mvp"] = data["was_mvp"].fillna(value = False)
 # In[10]:
 
 
-plt.scatter(data['fg_per_g'], data['fga_per_g']* data['fg_pct'])
-plt.xlabel("fg_per_g")
-plt.ylabel("fga * pct")
-plt.show()
+#plt.scatter(data['fg_per_g'], data['fga_per_g']* data['fg_pct'])
+#plt.xlabel("fg_per_g")
+#plt.ylabel("fga * pct")
+#plt.show()
 np.corrcoef(data["fg_per_g"], data["fga_per_g"]* data["fg_pct"])
 
 
