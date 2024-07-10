@@ -764,24 +764,24 @@ merged_df = merged_df[merged_df['team_id'] != 'TOT'].drop_duplicates(subset=['pl
 with st.expander("2023-2024 Player Stats"):
     st.write(merged_df)
 
-    player1 = st.text_input('Type a player to see their compare stats')
-    player2 = st.text_input('Type a second player to compare their career stats')
-    if player1 and player2:
-        player1_data = merged_df[merged_df['player'].str.lower() == player1.lower()]
-        player2_data = merged_df[merged_df['player'].str.lower() == player2.lower()]
-        if not player1_data.empty and not player2_data.empty:
-            col1, col2 = st.columns(2)
-            with col1:
-                st.write("Player 1:")
-                st.write(player1_data)
+    #player1 = st.text_input('Type a player to see their compare stats')
+    #player2 = st.text_input('Type a second player to compare their career stats')
+    #if player1 and player2:
+    #    player1_data = merged_df[merged_df['player'].str.lower() == player1.lower()]
+    #    player2_data = merged_df[merged_df['player'].str.lower() == player2.lower()]
+    #    if not player1_data.empty and not player2_data.empty:
+    #        col1, col2 = st.columns(2)
+    #        with col1:
+    #            st.write("Player 1:")
+    #            st.write(player1_data)
 
-            with col2:
-                st.write("Player 2:")
-                st.write(player2_data)
-        else:
-            st.write("No player found with the name:", player1)
-    else:
-        st.write(merged_df)
+    #        with col2:
+    #            st.write("Player 2:")
+    #            st.write(player2_data)
+    #    else:
+    #        st.write("No player found with the name:", player1)
+    #else:
+    #    st.write(merged_df)
 
 # In[ ]:
 
