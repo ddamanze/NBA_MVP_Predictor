@@ -198,7 +198,7 @@ df = df.drop(df[df["mp_per_g"] < 28].index)
 
 # In[22]:
 
-elif option == ''Data Visualization':
+elif option == 'Data Visualization':
     st.title("Data Visualization")
     with st.expander("Data Visualization"):
         mvp_votes['Category'] = 'MVP votes'
