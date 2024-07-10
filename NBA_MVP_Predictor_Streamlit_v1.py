@@ -37,11 +37,14 @@ st.write(filtered_data.describe())
 
 # In[4]:
 with st.expander("Player Search"):
+    theta = ['pts_per_g', 'ast_per_g', 'trb_per_g']
     selected_player = st.text_input('Type a player to see their career stats')
     if selected_player:
         filtered_player = data[data['player'].str.contains(selected_player, case=False, na=False)]
         if not filtered_player.empty:
             st.write(filtered_player.sort_values(by=["player", "season"]))
+            fig = px.line_polar(filtered_player, theta = 'theta')
+            st.plotly_chart(fig)
         else:
             st.write("No player found with the name:", selected_player)
     else:
