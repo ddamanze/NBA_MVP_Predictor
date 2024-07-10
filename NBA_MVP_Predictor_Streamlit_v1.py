@@ -26,16 +26,18 @@ data = pd.read_csv("https://raw.githubusercontent.com/ddamanze/NBA_MVP_Predictor
 
 # In[3]:
 
-
-st.title("Data Overview - Player Stats 1982-2022")
-#data['season'] = data['season'].apply(lambda x: '{:.0f}'.format(x))
-selected_year = st.selectbox('Select a season', options = data['season'].unique())
-filtered_data = data[data['season'] == selected_year]
-filtered_data = filtered_data.sort_values(by=["award_share"], ascending=False)
-st.write(f'Data for the year {selected_year}:')
-st.write(filtered_data)
-st.write(f'{selected_year} Summary Statistics:')
-st.write(filtered_data.describe())
+st.sidebar.title("NBA MVP Dashboar")
+option = st.sidebar.selectbox('Navigation', ['Data Overview', 'Player Search', 'Data Visualization', 'Team Performance'])
+if option == 'Data Overview':
+    st.title("Data Overview - Player Stats 1982-2022")
+    #data['season'] = data['season'].apply(lambda x: '{:.0f}'.format(x))
+    selected_year = st.selectbox('Select a season', options = data['season'].unique())
+    filtered_data = data[data['season'] == selected_year]
+    filtered_data = filtered_data.sort_values(by=["award_share"], ascending=False)
+    st.write(f'Data for the year {selected_year}:')
+    st.write(filtered_data)
+    st.write(f'{selected_year} Summary Statistics:')
+    st.write(filtered_data.describe())
 
 # In[4]:
 
