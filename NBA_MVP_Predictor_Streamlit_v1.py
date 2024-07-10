@@ -40,9 +40,8 @@ with st.expander("Player Search"):
     selected_player = st.text_input('Type a player to see their career stats')
     if selected_player:
         filtered_player = data[data['player'].str.contains(selected_player, case=False, na=False)]
-        filtered_player = filtered_player.groupby(by=["player"])
         if not filtered_player.empty:
-            st.write(filtered_player)
+            st.write(filtered_player.groupby(by=["player"]))
         else:
             st.write("No player found with the name:", selected_player)
     else:
