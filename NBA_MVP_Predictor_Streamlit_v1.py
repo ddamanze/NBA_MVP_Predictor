@@ -769,7 +769,7 @@ with st.expander("2023-2024 Player Stats"):
     if player1 and player2:
         player1_data = merged_df[merged_df['player'].str.lower() == player1.lower()]
         player2_data = merged_df[merged_df['player'].str.lower() == player2.lower()]
-        if not player1_data.empty and player2_data.empty:
+        if not player1_data.empty and not player2_data.empty:
             col1, col2 = st.columns(2)
             with col1:
                 st.write("Player 1:")
