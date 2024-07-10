@@ -41,7 +41,6 @@ with st.expander("Player Search"):
     if selected_player:
         filtered_player = data[data['player'].str.contains(selected_player, case=False, na=False)]
         filtered_player = filtered_player.groupby(by=["player"])
-        filtered_player = filtered_player.sort_values(by=["season"])
         if not filtered_player.empty:
             st.write(filtered_player)
         else:
