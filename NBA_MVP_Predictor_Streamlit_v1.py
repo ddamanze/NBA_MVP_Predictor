@@ -41,7 +41,7 @@ with st.expander("Player Search"):
     if selected_player:
         filtered_player = data[data['player'].str.contains(selected_player, case=False, na=False)]
         if not filtered_player.empty:
-            st.write(filtered_player.sort_values(by=["player"]))
+            st.write(filtered_player.sort_values(by=["player", "season"]))
         else:
             st.write("No player found with the name:", selected_player)
     else:
