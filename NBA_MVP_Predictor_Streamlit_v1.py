@@ -26,7 +26,7 @@ data = pd.read_csv("https://raw.githubusercontent.com/ddamanze/NBA_MVP_Predictor
 
 # In[3]:
 
-st.sidebar.title("NBA MVP Dashboar")
+st.sidebar.title("NBA MVP Dashboard")
 option = st.sidebar.selectbox('Navigation', ['Data Overview', 'Player Search', 'Data Visualization', 'Team Performance'])
 if option == 'Data Overview':
     st.title("Data Overview - Player Stats 1982-2022")
