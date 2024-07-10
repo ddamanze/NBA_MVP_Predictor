@@ -22,7 +22,6 @@ sns.set()
 
 data = pd.read_csv("https://raw.githubusercontent.com/ddamanze/NBA_MVP_Predictor/main/NBA__MVP_Dataset.csv")
 data['season'] = data['season'].apply(lambda x: f"{x:.0f}")
-data = data.iloc[:,1:]
 
 
 # In[3]:
