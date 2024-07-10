@@ -36,7 +36,7 @@ st.write(f'{selected_year} Summary Statistics:')
 st.write(filtered_data.describe())
 
 # In[4]:
-
+with st.expander("Player Search")
 st.title("Player Search")
 selected_player = st.text_input('Type a player to see their career stats')
 if selected_player:
