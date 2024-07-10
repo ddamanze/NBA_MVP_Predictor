@@ -10,7 +10,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 import plotly.express as px
-from unidecode import unidecode
 sns.set()
 
 
@@ -40,7 +39,6 @@ st.write(filtered_data.describe())
 with st.expander("Player Search"):
     selected_player = st.text_input('Type a player to see their career stats')
     if selected_player:
-        selected_player = unidecode(selected_player.lower())
         filtered_player = data[data['player'].str.contains(selected_player, case=False, na=False)]
         if not filtered_player.empty:
             st.write(filtered_player)
