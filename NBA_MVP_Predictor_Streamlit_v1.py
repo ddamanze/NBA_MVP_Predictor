@@ -25,7 +25,7 @@ data['season'] = data['season'].apply(lambda x: f"{x:.0f}")
 
 
 # In[3]:
-st.title("Data Overview - Player Stats 1982-2022")
+st.title("Player Stats by Season")
 #data['season'] = data['season'].apply(lambda x: '{:.0f}'.format(x))
 selected_year = st.selectbox('Select a season', options = data['season'].unique())
 filtered_data = data[data['season'] == selected_year]
