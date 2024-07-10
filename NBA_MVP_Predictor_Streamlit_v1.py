@@ -121,57 +121,7 @@ data_num = data.select_dtypes(exclude = 'object')
 
 
 # In[13]:
-elif option == 'Data Visualization':
-    st.title("Data Visualization")
-    with st.expander("Data Visualization"):
-        mvp_votes['Category'] = 'MVP votes'
-        no_mvp_votes['Category'] = 'No MVP votes'
-        combined_mvp_votes = pd.concat([mvp_votes, no_mvp_votes])
-        
-        fig2 = px.histogram(
-            combined_mvp_votes,
-            x='pts_per_g',
-            color = 'Category',
-            nbins=20,
-            barmode='overlay',
-            histnorm='probability density',
-            opacity=0.7,
-            labels={'pts_per_g': 'Pts Per Game'},
-            title='Pts Per Game MVP votes vs No MVP votes'
-        )
-    
-        # Customize the layout
-        fig2.update_layout(
-            xaxis_title="Pts Per Game",
-            yaxis_title="Proportion"
-        )
-        st.plotly_chart(fig2)
-        pts_cutoff = mvp_votes["pts_per_g"].mean() - (mvp_votes["pts_per_g"].std()*3)
-        st.write("Most of the players that have received MVP votes over the past two decades have averaged 20 points per game. The average for all players within this time is 8.4.")
-    
-        
-        fig3 = px.histogram(
-            combined_mvp_votes,
-            x='win_loss_pct',
-            color = 'Category',
-            nbins=20,
-            barmode='overlay',
-            histnorm='probability density',
-            opacity=0.7,
-            labels={'win_loss_pct': 'Win Loss Pct'},
-            title='Win Loss Pct MVP votes vs No MVP votes'
-        )
-    
-        # Customize the layout
-        fig3.update_layout(
-            xaxis_title="Win Loss Pct",
-            yaxis_title="Proportion"
-        )
-        st.plotly_chart(fig3)
-        
-        WL_cutoff = mvp_votes["win_loss_pct"].mean() - (mvp_votes["win_loss_pct"].std()*3)
-        #st.write(f"Win Loss Cutoff to win MVP is {WL_cutoff:.3f}")
-        st.write("Most players with MVP votes have a team win loss pct over 0.6. The average is 0.5")
+
 
 fig5, ax = plt.subplots(figsize=(15,10))
 sns.heatmap(data_num.corr())
@@ -248,7 +198,57 @@ df = df.drop(df[df["mp_per_g"] < 28].index)
 
 # In[22]:
 
-
+#elif option == 'Data Visualization':
+    st.title("Data Visualization")
+    with st.expander("Data Visualization"):
+        mvp_votes['Category'] = 'MVP votes'
+        no_mvp_votes['Category'] = 'No MVP votes'
+        combined_mvp_votes = pd.concat([mvp_votes, no_mvp_votes])
+        
+        fig2 = px.histogram(
+            combined_mvp_votes,
+            x='pts_per_g',
+            color = 'Category',
+            nbins=20,
+            barmode='overlay',
+            histnorm='probability density',
+            opacity=0.7,
+            labels={'pts_per_g': 'Pts Per Game'},
+            title='Pts Per Game MVP votes vs No MVP votes'
+        )
+    
+        # Customize the layout
+        fig2.update_layout(
+            xaxis_title="Pts Per Game",
+            yaxis_title="Proportion"
+        )
+        st.plotly_chart(fig2)
+        pts_cutoff = mvp_votes["pts_per_g"].mean() - (mvp_votes["pts_per_g"].std()*3)
+        st.write("Most of the players that have received MVP votes over the past two decades have averaged 20 points per game. The average for all players within this time is 8.4.")
+    
+        
+        fig3 = px.histogram(
+            combined_mvp_votes,
+            x='win_loss_pct',
+            color = 'Category',
+            nbins=20,
+            barmode='overlay',
+            histnorm='probability density',
+            opacity=0.7,
+            labels={'win_loss_pct': 'Win Loss Pct'},
+            title='Win Loss Pct MVP votes vs No MVP votes'
+        )
+    
+        # Customize the layout
+        fig3.update_layout(
+            xaxis_title="Win Loss Pct",
+            yaxis_title="Proportion"
+        )
+        st.plotly_chart(fig3)
+        
+        WL_cutoff = mvp_votes["win_loss_pct"].mean() - (mvp_votes["win_loss_pct"].std()*3)
+        #st.write(f"Win Loss Cutoff to win MVP is {WL_cutoff:.3f}")
+        st.write("Most players with MVP votes have a team win loss pct over 0.6. The average is 0.5")
 
 
 # In[23]:
@@ -683,39 +683,39 @@ from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
 # In[ ]:
 
-
-with st.expander("2023-2024 Team Performance"):
-    x = nba_advanced_df["ortg"]
-    y = nba_advanced_df["drtg"]
-
-    fig6 = px.scatter(
-        nba_advanced_df,
-        x = "ortg",
-        y = "drtg",
-        color = np.random.rand(len(nba_advanced_df)),
-        hover_data = {"ortg": True, "drtg": True, "team_id": True},
-        labels = {'ortg': 'ORTG', 'drtg': 'DRTG'}
-    )
-
-    # Customize hover info
-    fig6.update_traces(
-        hovertemplate="<b>%{hovertext}</b><br><br>" +
-                      "ORTG: %{x}<br>" +
-                      "DRTG: %{y}<br>" +
-                      "<extra></extra>",
-        hovertext=nba_advanced_df["team_id"]
-    )
-
-    # Customize the layout
-    fig6.update_layout(
-        title = "Offensive and Defensive Team Ratings",
-        xaxis_title="ORTG",
-        yaxis_title="DRTG",
-        yaxis=dict(autorange="reversed"), # Invert y-axis
-        coloraxis_showscale=False # Hide color scale
-    )
-
-    st.plotly_chart(fig6)
+elif option == 'Team Performance':
+    with st.expander("2023-2024 Team Performance"):
+        x = nba_advanced_df["ortg"]
+        y = nba_advanced_df["drtg"]
+    
+        fig6 = px.scatter(
+            nba_advanced_df,
+            x = "ortg",
+            y = "drtg",
+            color = np.random.rand(len(nba_advanced_df)),
+            hover_data = {"ortg": True, "drtg": True, "team_id": True},
+            labels = {'ortg': 'ORTG', 'drtg': 'DRTG'}
+        )
+    
+        # Customize hover info
+        fig6.update_traces(
+            hovertemplate="<b>%{hovertext}</b><br><br>" +
+                          "ORTG: %{x}<br>" +
+                          "DRTG: %{y}<br>" +
+                          "<extra></extra>",
+            hovertext=nba_advanced_df["team_id"]
+        )
+    
+        # Customize the layout
+        fig6.update_layout(
+            title = "Offensive and Defensive Team Ratings",
+            xaxis_title="ORTG",
+            yaxis_title="DRTG",
+            yaxis=dict(autorange="reversed"), # Invert y-axis
+            coloraxis_showscale=False # Hide color scale
+        )
+    
+        st.plotly_chart(fig6)
 
 
 # In[ ]:
