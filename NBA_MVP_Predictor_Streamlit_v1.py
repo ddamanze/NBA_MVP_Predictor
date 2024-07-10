@@ -38,7 +38,7 @@ st.write(filtered_data.describe())
 # In[4]:
 
 st.title("Player Search")
-#    selected_player = st.text_input('Type a player to see their career stats')
+selected_player = st.text_input('Type a player to see their career stats')
 if selected_player:
     filtered_player = data[data['player'] == selected_player].lower()
     if not filtered_player.empty:
@@ -46,7 +46,7 @@ if selected_player:
     else:
         st.write("No player found with the name:", selected_player)
 else:
-    st.write("Please enter a player's name.")
+    st.write(data)
 
 
 # In[5]:
