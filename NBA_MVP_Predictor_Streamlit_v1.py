@@ -41,16 +41,16 @@ if option == 'Data Overview':
 
 # In[4]:
 
-
-selected_player = st.text_input('Type a player to see their career stats')
-if selected_player:
-    filtered_player = data[data['player'] == selected_player]
-    if not filtered_player.empty:
-        st.write(filtered_player)
+elif option == 'Player Search':
+    selected_player = st.text_input('Type a player to see their career stats')
+    if selected_player:
+        filtered_player = data[data['player'] == selected_player]
+        if not filtered_player.empty:
+            st.write(filtered_player)
+        else:
+            st.write("No player found with the name:", selected_player)
     else:
-        st.write("No player found with the name:", selected_player)
-else:
-    st.write("Please enter a player's name.")
+        st.write("Please enter a player's name.")
 
 
 # In[5]:
