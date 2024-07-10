@@ -25,33 +25,28 @@ data = pd.read_csv("https://raw.githubusercontent.com/ddamanze/NBA_MVP_Predictor
 
 
 # In[3]:
-
-st.sidebar.title("NBA MVP Dashboard")
-option = st.sidebar.selectbox('Navigation', ['Data Overview', 'Player Search', 'Data Visualization', 'Team Performance'])
-if option == 'Data Overview':
-    st.title("Data Overview - Player Stats 1982-2022")
-    #data['season'] = data['season'].apply(lambda x: '{:.0f}'.format(x))
-    selected_year = st.selectbox('Select a season', options = data['season'].unique())
-    filtered_data = data[data['season'] == selected_year]
-    filtered_data = filtered_data.sort_values(by=["award_share"], ascending=False)
-    st.write(f'Data for the year {selected_year}:')
-    st.write(filtered_data)
-    st.write(f'{selected_year} Summary Statistics:')
-    st.write(filtered_data.describe())
+st.title("Data Overview - Player Stats 1982-2022")
+#data['season'] = data['season'].apply(lambda x: '{:.0f}'.format(x))
+selected_year = st.selectbox('Select a season', options = data['season'].unique())
+filtered_data = data[data['season'] == selected_year]
+filtered_data = filtered_data.sort_values(by=["award_share"], ascending=False)
+st.write(f'Data for the year {selected_year}:')
+st.write(filtered_data)
+st.write(f'{selected_year} Summary Statistics:')
+st.write(filtered_data.describe())
 
 # In[4]:
 
-elif option == 'Player Search':
-    st.title("Player Search")
+st.title("Player Search")
 #    selected_player = st.text_input('Type a player to see their career stats')
-    if selected_player:
-        filtered_player = data[data['player'] == selected_player]
-        if not filtered_player.empty:
-            st.write(filtered_player)
-        else:
-            st.write("No player found with the name:", selected_player)
+if selected_player:
+    filtered_player = data[data['player'] == selected_player].lower()
+    if not filtered_player.empty:
+        st.write(filtered_player)
     else:
-        st.write("Please enter a player's name.")
+        st.write("No player found with the name:", selected_player)
+else:
+    st.write("Please enter a player's name.")
 
 
 # In[5]:
@@ -198,7 +193,6 @@ df = df.drop(df[df["mp_per_g"] < 28].index)
 
 # In[22]:
 
-#elif option == 'Data Visualization':
 st.title("Data Visualization")
 with st.expander("Data Visualization"):
     mvp_votes['Category'] = 'MVP votes'
@@ -683,39 +677,38 @@ from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
 # In[ ]:
 
-elif option == 'Team Performance':
-    with st.expander("2023-2024 Team Performance"):
-        x = nba_advanced_df["ortg"]
-        y = nba_advanced_df["drtg"]
-    
-        fig6 = px.scatter(
-            nba_advanced_df,
-            x = "ortg",
-            y = "drtg",
-            color = np.random.rand(len(nba_advanced_df)),
-            hover_data = {"ortg": True, "drtg": True, "team_id": True},
-            labels = {'ortg': 'ORTG', 'drtg': 'DRTG'}
-        )
-    
-        # Customize hover info
-        fig6.update_traces(
-            hovertemplate="<b>%{hovertext}</b><br><br>" +
-                          "ORTG: %{x}<br>" +
-                          "DRTG: %{y}<br>" +
-                          "<extra></extra>",
-            hovertext=nba_advanced_df["team_id"]
-        )
-    
-        # Customize the layout
-        fig6.update_layout(
-            title = "Offensive and Defensive Team Ratings",
-            xaxis_title="ORTG",
-            yaxis_title="DRTG",
-            yaxis=dict(autorange="reversed"), # Invert y-axis
-            coloraxis_showscale=False # Hide color scale
-        )
-    
-        st.plotly_chart(fig6)
+with st.expander("2023-2024 Team Performance"):
+    x = nba_advanced_df["ortg"]
+    y = nba_advanced_df["drtg"]
+
+    fig6 = px.scatter(
+        nba_advanced_df,
+        x = "ortg",
+        y = "drtg",
+        color = np.random.rand(len(nba_advanced_df)),
+        hover_data = {"ortg": True, "drtg": True, "team_id": True},
+        labels = {'ortg': 'ORTG', 'drtg': 'DRTG'}
+    )
+
+    # Customize hover info
+    fig6.update_traces(
+        hovertemplate="<b>%{hovertext}</b><br><br>" +
+                      "ORTG: %{x}<br>" +
+                      "DRTG: %{y}<br>" +
+                      "<extra></extra>",
+        hovertext=nba_advanced_df["team_id"]
+    )
+
+    # Customize the layout
+    fig6.update_layout(
+        title = "Offensive and Defensive Team Ratings",
+        xaxis_title="ORTG",
+        yaxis_title="DRTG",
+        yaxis=dict(autorange="reversed"), # Invert y-axis
+        coloraxis_showscale=False # Hide color scale
+    )
+
+    st.plotly_chart(fig6)
 
 
 # In[ ]:
