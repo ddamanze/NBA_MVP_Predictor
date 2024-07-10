@@ -767,8 +767,8 @@ with st.expander("2023-2024 Player Stats"):
     player1 = st.text_input('Type a player to see their compare stats')
     player2 = st.text_input('Type a second player to compare their career stats')
     if player1 and player2:
-        player1_data = merged_df[merged_df['player'].str.lower() == player1.lower()]
-        player2_data = merged_df[merged_df['player'].str.lower() == player2.lower()]
+        player1_data = merged_df[merged_df['player'] == player1]
+        player2_data = merged_df[merged_df['player'] == player2]
         if not player1_data.empty and not player2_data.empty:
             col1, col2 = st.columns(2)
             with col1:
