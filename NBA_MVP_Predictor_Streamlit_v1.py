@@ -40,7 +40,7 @@ st.write(filtered_data.describe())
 st.title("Player Search")
 selected_player = st.text_input('Type a player to see their career stats')
 if selected_player:
-    filtered_player = data[data['player'].str.lower() == selected_player.lower()]
+    filtered_player = data[data['player'].str.contains(selected_player, case=False, na=False)]
     if not filtered_player.empty:
         st.write(filtered_player)
     else:
