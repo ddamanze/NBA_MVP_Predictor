@@ -761,7 +761,7 @@ merged_df = merged_df[merged_df['team_id'] != 'TOT'].drop_duplicates(subset=['pl
 # In[ ]:
 import time
 def get_player_headshot_url(player_name):
-    search url = f"https://www.basektball-reference.com/search/search.fcgi?search={player_name.replace(' ', '+')}"
+    search_url = f"https://www.basektball-reference.com/search/search.fcgi?search={player_name.replace(' ', '+')}"
     response = requests.get(search_url)
     soup = BeautifulSoup(response.content, 'html.parser')
 
