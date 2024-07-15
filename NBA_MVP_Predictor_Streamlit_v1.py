@@ -759,28 +759,28 @@ merged_df = merged_df[merged_df['team_id'] != 'TOT'].drop_duplicates(subset=['pl
 
 
 # In[ ]:
-#import time
-#def get_player_headshot_url(player_name):
-#    search_url = f"https://www.basektball-reference.com/search/search.fcgi?search={player_name.replace(' ', '+')}"
-#    response = requests.get(search_url)
-#    soup = BeautifulSoup(response.content, 'html.parser')
+import time
+def get_player_headshot_url(player_name):
+    search_url = f"https://www.basektball-reference.com/search/search.fcgi?search={player_name.replace(' ', '+')}"
+    response = requests.get(search_url)
+    soup = BeautifulSoup(response.content, 'html.parser')
 
-#    player_link = None
-#    for link in soup.find_all('a'):
-#        if '/players' in link.get('href'):
-#            player_link = link.get('href')
-#            break
-#    if player_link:
-#        profile_url = f"https://www.basektball-reference.com{player_link}"
-#        profile_response = requests.get(profile_url)
-#        profile_soup = BeautifulSoup(profile_reponse.content, 'html.parser')
-#        headshot = profile_soup.find('img', {'class': 'headshot'})
-#        if headshot:
-#            return headshot.get('src')
-#    return None
-#merged_df['headshot_url'] = merged_df['player'].apply(get_player_headshot_url)
-#merged_df.to_csv('updated_merged_df', index=False)
-#time.sleep(5)
+    player_link = None
+    for link in soup.find_all('a'):
+        if '/players' in link.get('href'):
+            player_link = link.get('href')
+            break
+    if player_link:
+        profile_url = f"https://www.basektball-reference.com{player_link}"
+        profile_response = requests.get(profile_url)
+        profile_soup = BeautifulSoup(profile_reponse.content, 'html.parser')
+        headshot = profile_soup.find('jpg', {'class': 'headshot'})
+        if headshot:
+            return headshot.get('src')
+    return None
+merged_df['headshot_url'] = merged_df['player'].apply(get_player_headshot_url)
+merged_df.to_csv('updated_merged_df', index=False)
+time.sleep(5)
 
 with st.expander("2023-2024 Player Stats"):
     st.write(merged_df)
