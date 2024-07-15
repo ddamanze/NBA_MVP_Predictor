@@ -773,7 +773,7 @@ with st.expander("2023-2024 Player Stats"):
             col1, col2 = st.columns(2)
             with col1:
                 st.write("Player 1:")
-                st.write(player1_data)
+                st.write(player1_data.set_index('player').transpose())
 
             with col2:
                 st.write("Player 2:")
