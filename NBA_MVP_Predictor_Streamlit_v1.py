@@ -780,7 +780,7 @@ with st.expander("2023-2024 Player Stats"):
                 st.write(player2_data)
         else:
             st.write("No player found with the name:", player2_data.empty)
-    else:
+    #else:
         #st.write(merged_df)
 
 # In[ ]:
