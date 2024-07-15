@@ -770,7 +770,7 @@ def get_player_headshot_url(player_name):
     if search_results:
         for link in search_results.find_all('a', href=True):
             if '/players' in link['href']:
-                player_link = link.['href']
+                player_link = link['href']
                 break
         if player_link:
             profile_url = f"https://www.basektball-reference.com{player_link}"
