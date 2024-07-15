@@ -44,8 +44,8 @@ with st.expander("Player Search"):
             st.write(filtered_player.sort_values(by=["player", "season"]))
         else:
             st.write("No player found with the name:", selected_player)
-    #else:
-        
+    else:
+        st.write(data)
 
 
 # In[5]:
@@ -781,7 +781,7 @@ with st.expander("2023-2024 Player Stats"):
         else:
             st.write("No player found with the name:", player2_data.empty)
     else:
-        st.write(merged_df)
+        #st.write(merged_df)
 
 # In[ ]:
 
