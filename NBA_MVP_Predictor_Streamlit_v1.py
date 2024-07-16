@@ -819,8 +819,7 @@ def get_player_headshot_url(player_name):
         st.write(f"Error fetching headshot for {player_name}: {e}")
         return None
 
-lebron = get_player_headshot_url('LeBron James')
-st.image(lebron)
+get_player_headshot_url('LeBron James')
 #merged_df['headshot_url'] = merged_df['player'].apply(get_player_headshot_url)
 #merged_df.to_csv('updated_merged_df', index=False)
 #time.sleep(5)
