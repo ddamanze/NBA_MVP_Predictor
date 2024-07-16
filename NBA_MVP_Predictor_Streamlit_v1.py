@@ -809,15 +809,16 @@ def get_player_headshot_url(player_name):
             st.write(f"Profile URL: {profile_url}")
 
             # Find the headshot image in the profile page
-            headshot = profile_soup.find('img', {'class': 'media-item'})
-
-            if headshot:
-                return headshot.get('src')
+            media_item_div = profile_soup.find('div', {'class': 'media-item'})
+            if media_item_div:
+                headshot = media_item_div.find('img')
+                if headshot:
+                    return headshot.get('src')
+                else:
+                    st.write("Image tag not found within media-item div.")
             else:
-                # Output profile_response content for debugging purposes
-                st.write("Headshot not found. Profile content:")
-                st.write(profile_soup.prettify())
-
+                st.write("Media-item div not found in the profile page.")
+                
         else:
             st.write(f"Player profile link not found for {player_name}")
             return None
