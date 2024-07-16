@@ -799,27 +799,35 @@ def get_player_headshot_url(player_name):
                     player_link = link['href']
                     break
 
-        
-
         if player_link:
-                profile_url = f"https://www.basketball-reference.com{player_link}"
-                profile_response = requests.get(profile_url)
-                profile_response.raise_for_status()
-                profile_soup = BeautifulSoup(profile_response.content, 'html.parser')
-                
-                headshot = profile_soup.find('img', {'class': 'media-item'})
-                if headshot:
-                    #return headshot.get('src')
-                    st.image(headshot)
+            profile_url = f"https://www.basketball-reference.com{player_link}"
+            profile_response = requests.get(profile_url)
+            profile_response.raise_for_status()
+            profile_soup = BeautifulSoup(profile_response.content, 'html.parser')
+
+            # Output profile_url for debugging purposes
+            st.write(f"Profile URL: {profile_url}")
+
+            # Find the headshot image in the profile page
+            headshot = profile_soup.find('img', {'class': 'media-item'})
+
+            if headshot:
+                return headshot.get('src')
+            else:
+                # Output profile_response content for debugging purposes
+                st.write("Headshot not found. Profile content:")
+                st.write(profile_soup.prettify())
+
         else:
-            st.write(f"Headshot not found for {player_name}")
+            st.write(f"Player profile link not found for {player_name}")
             return None
 
     except Exception as e:
         st.write(f"Error fetching headshot for {player_name}: {e}")
         return None
 
-player_name = 'Kevin Durant'
+# Testing the function in Streamlit
+player_name = 'LeBron James'
 headshot_url = get_player_headshot_url(player_name)
 
 if headshot_url:
