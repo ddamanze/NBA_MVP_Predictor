@@ -847,17 +847,17 @@ def get_player_headshot_url(player_name):
         return None
 
 # Testing the function in Streamlit
-player_name = 'LeBron James'
-headshot_url = get_player_headshot_url(player_name)
+#player_name = 'LeBron James'
+#headshot_url = get_player_headshot_url(player_name)
 
 if headshot_url:
     st.image(headshot_url, caption=player_name)
 else:
     st.write(f"No headshot found for {player_name}")
     
-merged_df['headshot_url'] = merged_df['player'].apply(get_player_headshot_url)
-merged_df.to_csv('updated_merged_df', index=False)
-time.sleep(5)
+#merged_df['headshot_url'] = merged_df['player'].apply(get_player_headshot_url)
+#merged_df.to_csv('updated_merged_df', index=False)
+#time.sleep(5)
 
 with st.expander("2023-2024 Player Stats"):
     st.write(merged_df)
@@ -871,10 +871,12 @@ with st.expander("2023-2024 Player Stats"):
             col1, col2 = st.columns(2)
             with col1:
                 st.write("Player 1:")
+                st.image(get_player_headshot_url(player1))
                 st.write(player1_data.set_index('player').transpose())
 
             with col2:
                 st.write("Player 2:")
+                st.image(get_player_headshot_url(player2))
                 st.write(player2_data.set_index('player').transpose())
         else:
             st.write("No player found with the name:", player2_data.empty)
