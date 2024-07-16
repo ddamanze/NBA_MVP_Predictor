@@ -512,21 +512,23 @@ if response.status_code == 200:
   player_stats_table = soup.find("table", {"id": "per_game_stats"})
 
   # Extract the data from the table (you'll need to adapt this based on the table structure)
-  for row in player_stats_table.find("tbody").find_all("tr"):
-    columns = row.find_all(["th","td"])
-    player_name = columns[1].text.strip()
-    other_columns = [col.text.strip() for col in columns[2:30]]
-    #points_per_game = columns[28].text.strip()
-    player_dict = {"Player": player_name}
-    for i, col_text in enumerate(other_columns):
-      player_dict[f"Column_{i+1}"] = col_text
-    player_data_list.append(player_dict)
+    if player_stats_table:
+        for row in player_stats_table.find("tbody").find_all("tr"):
+            columns = row.find_all(["th","td"])
+            player_name = columns[1].text.strip()
+            other_columns = [col.text.strip() for col in columns[2:30]]
+            #points_per_game = columns[28].text.strip()
+            player_dict = {"Player": player_name}
+            for i, col_text in enumerate(other_columns):
+              player_dict[f"Column_{i+1}"] = col_text
+            player_data_list.append(player_dict)
+    else:
+        st.write("Table with id 'per_game_stats' not found.")
 else:
-    print(f"Failed to retrieve the page. Status code: {response.status_code}")
+print(f"Failed to retrieve the page. Status code: {response.status_code}")
 column_names = ["player", "pos", "age", "team_id", "g", "gs","mp_per_g", "fg_per_g", "fga_per_g", "fg_pct", "fg3_per_g", "fg3a_per_g", "fg3_pct",
                 "fg2_per_g", "fg2a_per_g", "fg2_pct", "efg_pct", "ft_per_g", "fta_per_g", "ft_pct", "orb_per_g", "drb_per_g", "tr_per_g", "ast_per_g", "stl_per_g", "blk_per_g", #change to trb
                 "tov_per_g", "pf_per_g", "pts_per_g"]
-st.write(player_data_list)
 #player_stats_df = pd.DataFrame(player_data_list)
 #st.write(player_stats_df)
 #player_stats_df.columns = column_names
