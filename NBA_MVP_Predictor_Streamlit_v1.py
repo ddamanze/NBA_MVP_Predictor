@@ -497,14 +497,29 @@ url = "https://www.basketball-reference.com/leagues/NBA_2024_per_game.html"
 # In[ ]:
 
 
-response = requests.get(url)
+def fetch_page(url, retries=5, backoff_factor=1.5):
+    for i in range(retries):
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response
+        elif response.status_code == 429:
+            # If rate-limited, wait and retry
+            wait_time = backoff_factor * (2 ** i)
+            print(f"Rate limited. Retrying in {wait_time} seconds...")
+            time.sleep(wait_time)
+        else:
+            print(f"Failed to retrieve the page. Status code: {response.status_code}")
+            return None
+    return None
+
+response = fetch_page(url)
 
 
 # In[ ]:
 
 
 player_data_list = []
-if response.status_code == 200:
+if response:
     # Parse the HTML content
     soup = BeautifulSoup(response.content, "html.parser")
 
