@@ -504,7 +504,11 @@ def fetch_page(url, retries=5, backoff_factor=1.5):
             return response
         elif response.status_code == 429:
             # If rate-limited, wait and retry
-            wait_time = backoff_factor * (2 ** i)
+            retry_after = response.headers.get("Retry-After")
+            if retry_after:
+                wait_time = int(retry_after)
+            else:
+                wait_time = backoff_factor * (2 ** i)
             print(f"Rate limited. Retrying in {wait_time} seconds...")
             time.sleep(wait_time)
         else:
@@ -512,7 +516,7 @@ def fetch_page(url, retries=5, backoff_factor=1.5):
             return None
     return None
 
-response = fetch_page(url)
+response = fetch_page(url, retries=10, backoff_factor=2)
 
 
 # In[ ]:
