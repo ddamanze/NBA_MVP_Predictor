@@ -759,7 +759,7 @@ merged_df = merged_df[merged_df['team_id'] != 'TOT'].drop_duplicates(subset=['pl
 
 
 # In[ ]:
-import time
+#import time
 #def get_player_headshot_url(player_name):
 #    search_url = f"https://www.basektball-reference.com/search/search.fcgi?search={player_name.replace(' ', '+')}"
 #    response = requests.get(search_url)
@@ -790,7 +790,7 @@ def get_player_headshot_url(player_name):
 
         # Find the player profile link from the search results
         player_link = None
-        search_results = soup.find_all('div', {'class': 'search-item'})
+        search_results = soup.find_all('div', {'class': 'search-item-name'})
 
         if search_results:
             for result in search_results:
