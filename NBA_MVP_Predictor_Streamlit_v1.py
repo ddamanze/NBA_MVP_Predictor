@@ -509,7 +509,7 @@ if response.status_code == 200:
   soup = BeautifulSoup(response.content, "html.parser")
 
   # Find the HTML elements containing the player stats
-  player_stats_table = soup.find("table", {"id": "div_per_game_stats"})
+  player_stats_table = soup.find("table", {"id": "per_game_stats"})
 
   # Extract the data from the table (you'll need to adapt this based on the table structure)
   for row in player_stats_table.find("tbody").find_all("tr"):
