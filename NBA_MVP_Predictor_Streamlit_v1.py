@@ -799,18 +799,17 @@ def get_player_headshot_url(player_name):
                     player_link = link['href']
                     break
 
-        if not player_link:
-            print(f"Player link not found for {player_name}")
-            return None
+        
 
-        profile_url = f"https://www.basketball-reference.com{player_link}"
-        profile_response = requests.get(profile_url)
-        profile_response.raise_for_status()
-        profile_soup = BeautifulSoup(profile_response.content, 'html.parser')
-        headshot = profile_soup.find('img', {'class': 'headshot'})
-
-        if headshot:
-            return headshot['src']
+        if player_link:
+                profile_url = f"https://www.basketball-reference.com{player_link}"
+                profile_response = requests.get(profile_url)
+                profile_response.raise_for_status()
+                profile_soup = BeautifulSoup(profile_response.content, 'html.parser')
+                
+                headshot = profile_soup.find('img', {'class': 'media-item'})
+                if headshot:
+                    return headshot.get('src')
         else:
             st.write(f"Headshot not found for {player_name}")
             return None
