@@ -819,7 +819,7 @@ def get_player_headshot_url(player_name):
         st.write(f"Error fetching headshot for {player_name}: {e}")
         return None
 
-player_name = 'LeBron James'
+player_name = 'Kevin Durant'
 headshot_url = get_player_headshot_url(player_name)
 
 if headshot_url:
