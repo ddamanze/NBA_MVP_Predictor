@@ -809,7 +809,8 @@ def get_player_headshot_url(player_name):
                 
                 headshot = profile_soup.find('img', {'class': 'media-item'})
                 if headshot:
-                    return headshot.get('src')
+                    #return headshot.get('src')
+                    st.image(headshot)
         else:
             st.write(f"Headshot not found for {player_name}")
             return None
