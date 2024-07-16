@@ -805,9 +805,6 @@ def get_player_headshot_url(player_name):
             profile_response.raise_for_status()
             profile_soup = BeautifulSoup(profile_response.content, 'html.parser')
 
-            # Output profile_url for debugging purposes
-            st.write(f"Profile URL: {profile_url}")
-
             # Find the headshot image in the profile page
             media_item_div = profile_soup.find('div', {'class': 'media-item'})
             if media_item_div:
@@ -835,9 +832,10 @@ if headshot_url:
     st.image(headshot_url, caption=player_name)
 else:
     st.write(f"No headshot found for {player_name}")
-#merged_df['headshot_url'] = merged_df['player'].apply(get_player_headshot_url)
-#merged_df.to_csv('updated_merged_df', index=False)
-#time.sleep(5)
+    
+merged_df['headshot_url'] = merged_df['player'].apply(get_player_headshot_url)
+merged_df.to_csv('updated_merged_df', index=False)
+time.sleep(5)
 
 with st.expander("2023-2024 Player Stats"):
     st.write(merged_df)
