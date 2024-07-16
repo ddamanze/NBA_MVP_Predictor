@@ -760,26 +760,65 @@ merged_df = merged_df[merged_df['team_id'] != 'TOT'].drop_duplicates(subset=['pl
 
 # In[ ]:
 import time
-def get_player_headshot_url(player_name):
-    search_url = f"https://www.basektball-reference.com/search/search.fcgi?search={player_name.replace(' ', '+')}"
-    response = requests.get(search_url)
-    soup = BeautifulSoup(response.content, 'html.parser')
+#def get_player_headshot_url(player_name):
+#    search_url = f"https://www.basektball-reference.com/search/search.fcgi?search={player_name.replace(' ', '+')}"
+#    response = requests.get(search_url)
+#    soup = BeautifulSoup(response.content, 'html.parser')
 
-    player_link = None
-    search_results = soup.find('div', {'class': 'search-item'})
-    if search_results:
-        for link in search_results.find_all('a', href=True):
-            if '/players' in link['href']:
-                player_link = link['href']
-                break
-        if player_link:
-            profile_url = f"https://www.basektball-reference.com{player_link}"
-            profile_response = requests.get(profile_url)
-            profile_soup = BeautifulSoup(profile_reponse.content, 'html.parser')
-            headshot = profile_soup.find('jpg', {'class': 'headshot'})
-            if headshot:
-                return headshot.get('src')
+#    player_link = None
+#    search_results = soup.find('div', {'class': 'search-item'})
+#    if search_results:
+#        for link in search_results.find_all('a', href=True):
+#            if '/players' in link['href']:
+#                player_link = link['href']
+#                break
+#        if player_link:
+#            profile_url = f"https://www.basektball-reference.com{player_link}"
+#            profile_response = requests.get(profile_url)
+#            profile_soup = BeautifulSoup(profile_reponse.content, 'html.parser')
+#            headshot = profile_soup.find('jpg', {'class': 'headshot'})
+#            if headshot:
+#                return headshot.get('src')
+#        return None
+
+def get_player_headshot_url(player_name):
+    try:
+        search_url = f"https://www.basketball-reference.com/search/search.fcgi?search={player_name.replace(' ', '+')}"
+        response = requests.get(search_url)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # Find the player profile link from the search results
+        player_link = None
+        search_results = soup.find_all('div', {'class': 'search-item'})
+
+        if search_results:
+            for result in search_results:
+                link = result.find('a', href=True)
+                if link and '/players/' in link['href']:
+                    player_link = link['href']
+                    break
+
+        if not player_link:
+            print(f"Player link not found for {player_name}")
+            return None
+
+        profile_url = f"https://www.basketball-reference.com{player_link}"
+        profile_response = requests.get(profile_url)
+        profile_response.raise_for_status()
+        profile_soup = BeautifulSoup(profile_response.content, 'html.parser')
+        headshot = profile_soup.find('img', {'class': 'headshot'})
+
+        if headshot:
+            return headshot['src']
+        else:
+            st.write(f"Headshot not found for {player_name}")
+            return None
+
+    except Exception as e:
+        st.write(f"Error fetching headshot for {player_name}: {e}")
         return None
+
 st.write(get_player_headshot_url('LeBron James'))
 #merged_df['headshot_url'] = merged_df['player'].apply(get_player_headshot_url)
 #merged_df.to_csv('updated_merged_df', index=False)
