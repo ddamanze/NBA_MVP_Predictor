@@ -780,9 +780,10 @@ def get_player_headshot_url(player_name):
             if headshot:
                 return headshot.get('src')
         return None
-merged_df['headshot_url'] = merged_df['player'].apply(get_player_headshot_url)
-merged_df.to_csv('updated_merged_df', index=False)
-time.sleep(5)
+st.write(get_player_headshot_url('LeBron James'))
+#merged_df['headshot_url'] = merged_df['player'].apply(get_player_headshot_url)
+#merged_df.to_csv('updated_merged_df', index=False)
+#time.sleep(5)
 
 with st.expander("2023-2024 Player Stats"):
     st.write(merged_df)
