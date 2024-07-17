@@ -790,6 +790,7 @@ def get_player_headshot_url(player_name):
 
 #Remove spaces
 #merged_df = merged_df.applymap(lambda x: x.replace(" ",""))
+merged_df = merged_df.replace(' ', '')
 
 with st.expander("2023-2024 Player Stats"):
 #    col1, col2, col3 = st.columns(3)
@@ -832,7 +833,6 @@ merged_df.isnull().sum()
 
 
 merged_df = merged_df.replace('', np.nan)
-
 
 # In[ ]:
 
