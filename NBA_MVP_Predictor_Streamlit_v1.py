@@ -792,7 +792,7 @@ def get_player_headshot_url(player_name):
 merged_df = merged_df.applymap(lambda x: x.strip())
 
 with st.expander("2023-2024 Player Stats"):
-        col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = st.columns(3)
     with col1:
         st.write("Pts Per Game Leader")
         ppg_leader_index = merged_df['pts_per_g'].idxmax()
