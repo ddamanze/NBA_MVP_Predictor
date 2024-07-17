@@ -477,7 +477,12 @@ column_names = ["player", "pos", "age", "team_id", "g", "gs","mp_per_g", "fg_per
                 "fg2_per_g", "fg2a_per_g", "fg2_pct", "efg_pct", "ft_per_g", "fta_per_g", "ft_pct", "orb_per_g", "drb_per_g", "tr_per_g", "ast_per_g", "stl_per_g", "blk_per_g", #change to trb
                 "tov_per_g", "pf_per_g", "pts_per_g"]
 
-player_data_list.replace(" ", "")
+def strip_spaces(row):
+    return [element.strip() if isinstance(element, str) else element for element in row]
+
+# Apply the function to each row in the data
+player_data_list = [strip_spaces(row) for row in data]
+
 player_stats_df = pd.DataFrame(player_data_list)
 #st.write(player_stats_df)
 player_stats_df.columns = column_names
