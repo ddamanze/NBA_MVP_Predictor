@@ -29,7 +29,6 @@ st.title("Player Stats by Season")
 #data['season'] = data['season'].apply(lambda x: '{:.0f}'.format(x))
 selected_year = st.selectbox('Select a season', options = data['season'].unique())
 filtered_data = data[data['season'] == selected_year]
-filtered_data = filtered_data.iloc[:,2:]
 filtered_data = filtered_data.sort_values(by=["award_share"], ascending=False)
 st.write(f'Data for the {selected_year} season:')
 st.write(filtered_data)
@@ -387,77 +386,6 @@ clf.fit(X, y)
 
 
 # In[42]:
-
-
-feature_importances = clf.feature_importances_
-features = X.columns
-
-with st.expander("Key Features in Determining MVP"):
-    # Create a dataframe for plotting
-    importance_df = pd.DataFrame({
-        'Metric': features,
-        'Importance': feature_importances
-    })
-    
-    fig4 = px.bar(
-        importance_df,
-        x='Metric',
-        y='Importance',
-        title='Random Forest Features Classifier',
-        labels={'Importance': 'Importance', 'Metric': 'Features'},
-        hover_data={'Metric': True, 'Importance': True}
-    )
-    
-    # Customize the hover information
-    fig4.update_traces(
-        hovertemplate="<b>%{hovertext}</b><br><br>" +
-                      "Importance: %{y}<br>" +
-                      "<extra></extra>",
-        hovertext=importance_df['Metric']
-    )
-
-    # Display the Plotly figure in Streamlit
-    st.write('What statistical metrics have the most importance for who wins MVP?')
-    st.plotly_chart(fig4)
-    
-#    feature_importances = clf.feature_importances_
-#    feature_importance_df = pd.DataFrame({'Feature': range(X.shape[1]), 'Importance': feature_importances})
-#    feature_importance_df.sort_values(by=["Importance"], ascending=False).head(10)
-
-#    all_columns = pd.DataFrame(smote_df.columns.tolist())
-#    all_columns['Feature'] = all_columns.index
-#    all_columns.head()
-
-#    important_columns = feature_importance_df.merge(all_columns, how = "left")
-#    important_columns = important_columns.rename(columns={0: "Metric"}).sort_values(by="Importance", ascending=False).head(5)
-#    st.write(important_columns)
-    st.markdown("""
-    ### Top 5 metrics to determine MVP:
-    1. Win shares per 48
-    2. Win shares
-    3. Box Plus Minus
-    4. Offensive win shares
-    5. Margin of victory (adjusted)
-    """)
-
-
-# In[43]:
-
-
-all_columns = pd.DataFrame(smote_df.columns.tolist())
-all_columns['Feature'] = all_columns.index
-all_columns.head()
-
-
-# Top 5 metrics to determine MVP are: <br> 1. Win shares per 48<br> 2. Win shares <br> 3. Box plus minus <br> 4. Offensive win shares <br> 5. Margin of victory (adjusted)
-
-# In[44]:
-
-
-#smote_df
-
-
-# In[45]:
 
 
 columns = ['age', 'g', 'gs', 'mp_per_g', 'fga_per_g', 'fg_pct',
