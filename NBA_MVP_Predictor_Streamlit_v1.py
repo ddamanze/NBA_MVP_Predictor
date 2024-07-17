@@ -789,7 +789,7 @@ def get_player_headshot_url(player_name):
 #time.sleep(5)
 
 #Remove spaces
-merged_df = merged_df.applymap(lambda x: x.strip()
+merged_df = merged_df.applymap(lambda x: x.strip())
 
 with st.expander("2023-2024 Player Stats"):
         col1, col2, col3 = st.columns(3)
