@@ -798,7 +798,7 @@ with st.expander("2023-2024 Player Stats"):
         st.write(ppg_leader)
     with col2:
         st.write("Rebs Per Game Leader")
-        reb_leader_index = merged_df['reb_per_g'].idxmax()
+        reb_leader_index = merged_df['trb_per_g'].idxmax()
         reb_leader = merged_df.loc[reb_leader_index]
         st.write(reb_leader)
     with col3:
