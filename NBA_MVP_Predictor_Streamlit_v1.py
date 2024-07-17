@@ -789,25 +789,7 @@ def get_player_headshot_url(player_name):
 #time.sleep(5)
     
 
-with st.expander("2023-2024 Player Stats"):
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.write("Pts Per Game Leader")
-        ppg_leader_index = merged_df['pts_per_g'].idxmax()
-        ppg_leader = merged_df.loc[ppg_leader_index]
-        st.write(ppg_leader)
-    with col2:
-        st.write("Rebs Per Game Leader")
-        reb_leader_index = merged_df['trb_per_g'].idxmax()
-        reb_leader = merged_df.loc[reb_leader_index]
-        st.write(reb_leader)
-    with col3:
-        st.write("Ast Per Game Leader")
-        ast_leader_index = merged_df['ast_per_g'].idxmax()
-        ast_leader = merged_df.loc[ast_leader_index]
-        st.write(ast_leader)
-
-    
+with st.expander("2023-2024 Player Stats"): 
     st.write(merged_df)
 
     player1 = st.text_input('Type a player to see their compare stats')
