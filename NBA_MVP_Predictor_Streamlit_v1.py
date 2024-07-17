@@ -28,7 +28,8 @@ data['season'] = data['season'].apply(lambda x: f"{x:.0f}")
 st.title("Player Stats by Season")
 #data['season'] = data['season'].apply(lambda x: '{:.0f}'.format(x))
 selected_year = st.selectbox('Select a season', options = data['season'].unique())
-filtered_data = data[data['season'] == selected_year].iloc[:,1:]
+filtered_data = data[data['season'] == selected_year]
+filtered_data = filtered_data.iloc[:,1:]
 filtered_data = filtered_data.sort_values(by=["award_share"], ascending=False)
 st.write(f'Data for the {selected_year} season:')
 st.write(filtered_data)
