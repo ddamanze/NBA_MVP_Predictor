@@ -31,7 +31,7 @@ selected_year = st.selectbox('Select a season', options = data['season'].unique(
 filtered_data = data[data['season'] == selected_year]
 filtered_data = filtered_data.sort_values(by=["award_share"], ascending=False)
 st.write(f'Data for the {selected_year} season:')
-st.write(filtered_data)
+st.write(filtered_data.iloc[:,1:])
 st.write(f'{selected_year} Summary Statistics:')
 st.write(filtered_data.describe())
 
