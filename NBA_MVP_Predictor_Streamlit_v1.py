@@ -790,6 +790,36 @@ def get_player_headshot_url(player_name):
 
 #Remove spaces
 
+def create_radar_chart(player1_data, player2_data, categories, player1, player2):
+    fig = go.Figure()
+
+    # Player 1
+    fig.add_trace(go.Scatterpolar(
+        r = player1_data[categories].values.flatten().tolist() + player1_data[categories].values.flatten().tolist()[:1],
+        theta = categories + [categories[0]],
+        fill = 'toself',
+        name=player1
+    ))
+    
+    # Player 2
+    fig.add_trace(go.Scatterpolar(
+        r = player2_data[categories].values.flatten().tolist() + player2_data[categories].values.flatten().tolist()[:1],
+        theta = categories + [categories[0]],
+        fill = 'toself',
+        name=player2
+    ))
+
+    fig.update_layout(
+        polar=dict(
+            radialaxis=dict(
+                visible=True,
+                range=[0, max(player1_data[categories].values.max(), player2_data[categories].values.max()) + 1]
+            )),
+        showlegend = True
+    )
+
+    return fig
+
 with st.expander("2023-2024 Player Stats"):
 #    col1, col2, col3 = st.columns(3)
 #    with col1:
@@ -816,6 +846,10 @@ with st.expander("2023-2024 Player Stats"):
                 st.write("Player 2:")
                 st.image(get_player_headshot_url(player2))
                 st.write(player2_data.set_index('player').transpose())
+
+            categories = ['pts_per_g', 'ast_per_g', 'trb_per_g', 'stl_per_g', 'blk_per_g']
+            fig = create_radar_chart(player1_data, player2_data, categories, player1, player 2)
+            st.plotly_chart(fig)
         else:
             st.write("No player found with the name:", player2_data.empty)
     #else:
