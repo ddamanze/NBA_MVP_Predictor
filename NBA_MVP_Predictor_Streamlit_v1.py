@@ -848,7 +848,7 @@ with st.expander("2023-2024 Player Stats"):
                 st.image(get_player_headshot_url(player2))
                 st.write(player2_data.set_index('player').transpose())
 
-            categories = ['pts_per_g', 'ast_per_g', 'trb_per_g', 'stl_per_g', 'blk_per_g']
+            categories = ['pts_per_g', 'ast_per_g', 'tr_per_g', 'stl_per_g', 'blk_per_g']
             fig = create_radar_chart(player1_data, player2_data, categories, player1, player2)
             st.plotly_chart(fig)
         else:
