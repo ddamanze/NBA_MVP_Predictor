@@ -795,16 +795,20 @@ def create_radar_chart(player1_data, player2_data, categories, player1, player2)
     fig = go.Figure()
 
     # Player 1
+    player1_values = player1_data[categories].values.flatten().tolist()
+    player1_values += player1_values[:1]
     fig.add_trace(go.Scatterpolar(
-        r = player1_data[categories].values.flatten().tolist() + player1_data[categories].values.flatten().tolist()[:1],
+        r = player1_values,
         theta = categories + [categories[0]],
         fill = 'toself',
         name=player1
     ))
     
     # Player 2
+    player2_values = player2_data[categories].values.flatten().tolist()
+    player2_values += player2_values[:1]
     fig.add_trace(go.Scatterpolar(
-        r = player2_data[categories].values.flatten().tolist() + player2_data[categories].values.flatten().tolist()[:1],
+        r = player2_values,
         theta = categories + [categories[0]],
         fill = 'toself',
         name=player2
@@ -814,7 +818,7 @@ def create_radar_chart(player1_data, player2_data, categories, player1, player2)
         polar=dict(
             radialaxis=dict(
                 visible=True,
-                range=[0, max(player1_data[categories].values.max(), player2_data[categories].values.max()) + 1]
+                range=[0, max(max(player1_values, max(player2_values) + 1]
             )),
         showlegend = True
     )
