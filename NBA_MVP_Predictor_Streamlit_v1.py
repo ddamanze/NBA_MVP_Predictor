@@ -841,6 +841,9 @@ with st.expander("2023-2024 Player Stats"):
         player1_data = merged_df[merged_df['player'] == player1]
         player2_data = merged_df[merged_df['player'] == player2]
         if not player1_data.empty and not player2_data.empty:
+            categories = ['pts_per_g', 'ast_per_g', 'tr_per_g', 'ws', 'vorp']
+            fig = create_radar_chart(player1_data, player2_data, categories, player1, player2)
+            st.plotly_chart(fig)
             col1, col2 = st.columns(2)
             with col1:
                 st.write("Player 1:")
@@ -852,9 +855,6 @@ with st.expander("2023-2024 Player Stats"):
                 st.image(get_player_headshot_url(player2))
                 st.write(player2_data.set_index('player').transpose())
 
-            categories = ['pts_per_g', 'ast_per_g', 'tr_per_g', 'ws', 'vorp']
-            fig = create_radar_chart(player1_data, player2_data, categories, player1, player2)
-            st.plotly_chart(fig)
         else:
             st.write("No player found with the name:", player2_data.empty)
     #else:
