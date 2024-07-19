@@ -788,7 +788,7 @@ def create_radar_chart(player1_data, player2_data, categories, player1, player2)
         polar=dict(
             radialaxis=dict(
                 visible=True,
-                range=[0, 100]#max(max(player1_values), max(player2_values))]
+                range=[0, max(max(player1_values), max(player2_values))]
             )),
         showlegend = True
     )
