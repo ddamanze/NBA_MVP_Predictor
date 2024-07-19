@@ -788,7 +788,7 @@ def create_radar_chart(player1_data, player2_data, categories, player1, player2)
         polar=dict(
             radialaxis=dict(
                 visible=True,
-                range=[0, 35]#max(max(player1_values), max(player2_values))]
+                range=[0, 100]#max(max(player1_values), max(player2_values))]
             )),
         showlegend = True
     )
@@ -811,7 +811,7 @@ with st.expander("2023-2024 Player Stats"):
         player1_data = merged_df[merged_df['player'] == player1]
         player2_data = merged_df[merged_df['player'] == player2]
         if not player1_data.empty and not player2_data.empty:
-            categories = ['pts_per_g', 'ast_per_g', 'tr_per_g', 'ws', 'vorp']
+            categories = ['trb_pct', 'ast_pct', 'usg_pct']
             fig = create_radar_chart(player1_data, player2_data, categories, player1, player2)
             st.plotly_chart(fig)
             col1, col2 = st.columns(2)
