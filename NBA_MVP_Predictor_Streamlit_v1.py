@@ -683,13 +683,20 @@ merged_df = merged_df.drop(columns=['fg_per_g', 'fg3_per_g', 'fg2_per_g', 'ft_pe
 # In[ ]:
 
 
-columns_ty = ['age', 'g', 'gs', 'mp_per_g', 'fga_per_g', 'fg_pct',
-        'fg2a_per_g', 'fg2_pct', 'efg_pct', 'fta_per_g', 'ft_pct', 'drb_per_g',
-        'ast_per_g', 'stl_per_g', 'tov_per_g', 'pf_per_g', 'pts_per_g', 'mp',
+#columns_ty = ['age', 'g', 'gs', 'mp_per_g', 'fga_per_g', 'fg_pct',
+#        'fg2a_per_g', 'fg2_pct', 'efg_pct', 'fta_per_g', 'ft_pct', 'drb_per_g',
+#        'ast_per_g', 'stl_per_g', 'tov_per_g', 'pf_per_g', 'pts_per_g', 'mp',
+#        'per', 'ts_pct', 'fta_per_fga_pct', 'drb_pct', 'trb_pct', 'ast_pct',
+#        'stl_pct', 'tov_pct', 'usg_pct', 'ows', 'dws', 'ws', 'ws_per_48',
+#        'obpm', 'dbpm', 'bpm', 'vorp', 'mov', 'mov_adj', 'win_loss_pct']
+
+columns_ty = ['age', 'g', 'gs', 'pts_per_g', 'ast_per_g', 'drb_per_g', 'stl_per_g', 'mp_per_g', 'fga_per_g', 'fg_pct',
+        'fg2a_per_g', 'fg2_pct', 'efg_pct', 'fta_per_g', 'ft_pct', 'tov_per_g', 'pf_per_g', 'mp',
         'per', 'ts_pct', 'fta_per_fga_pct', 'drb_pct', 'trb_pct', 'ast_pct',
         'stl_pct', 'tov_pct', 'usg_pct', 'ows', 'dws', 'ws', 'ws_per_48',
         'obpm', 'dbpm', 'bpm', 'vorp', 'mov', 'mov_adj', 'win_loss_pct']
 
+merged_df = merged_df[columns_ty]
 
 # In[ ]:
 
@@ -708,7 +715,6 @@ merged_df.player.duplicated().sum()
 
 
 merged_df = merged_df[merged_df['team_id'] != 'TOT'].drop_duplicates(subset=['player'])
-
 
 # In[ ]:
 
