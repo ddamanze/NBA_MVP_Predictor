@@ -36,11 +36,13 @@ st.write(filtered_data)
 st.write(f'{selected_year} Summary Statistics:')
 st.write(filtered_data.describe())
 
+
 # In[4]:
 with st.expander("Player Search"):
     selected_player = st.text_input('Type a player to see their career stats')
     if selected_player:
         filtered_player = data[data['player'].str.contains(selected_player, case=False, na=False)]
+        filtered_player
         if not filtered_player.empty:
             st.write(filtered_player.sort_values(by=["player", "season"]))
         else:
@@ -787,7 +789,7 @@ def create_radar_chart(player1_data, player2_data, categories, player1, player2)
         polar=dict(
             radialaxis=dict(
                 visible=True,
-                range=[0, max(max(player1_values), max(player2_values))+1]
+                range=[0, max(max(player1_values), max(player2_values))]
             )),
         showlegend = True
     )
