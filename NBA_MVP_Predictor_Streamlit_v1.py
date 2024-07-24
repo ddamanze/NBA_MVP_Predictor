@@ -45,6 +45,8 @@ with st.expander("Player Search"):
         filtered_player = data[data['player'].str.contains(selected_player, case=False, na=False)]
         filtered_player
         if not filtered_player.empty:
+            averages = filtered_player.mean(numeric_only=True)
+            filtered_player.loc["Average"] = averages
             st.write(filtered_player.sort_values(by=["player", "season"]))
         else:
             st.write("No player found with the name:", selected_player)
