@@ -808,6 +808,7 @@ def create_radar_chart(player1_data, player2_data, categories, player1, player2)
 
     return fig
 
+decimal_to_percentages = ["fg_pct", "fg3_pct", "fg2_pct", "efg_pct", "ft_pct", "ts_pct", "fg3a_per_fga_pct", "fta_per_fga_pct", "win_loss_pct"]
 with st.expander("2023-2024 Player Stats"):
 #    col1, col2, col3 = st.columns(3)
 #    with col1:
