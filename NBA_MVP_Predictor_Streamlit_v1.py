@@ -37,7 +37,8 @@ st.write(filtered_data)
 st.write(f'{selected_year} Summary Statistics:')
 st.write(filtered_data.describe())
 
-
+decimal_to_percentages = ["fg_pct", "fg3_pct", "fg2_pct", "efg_pct", "ft_pct", "ts_pct", "fg3a_per_fga_pct", "fta_per_fga_pct", "award_share", "win_loss_pct"]
+percentages = ["orb_pct", "drb_pct", "trb_pct", "ast_pct", "stl_pct", "blk_pct", "tov_pct", "usg_pct"]
 # In[4]:
 with st.expander("Player Search"):
     selected_player = st.text_input('Type a player to see their career stats')
@@ -47,10 +48,14 @@ with st.expander("Player Search"):
             averages = filtered_player.mean(numeric_only=True)
             filtered_player.loc["Average"] = averages
             averages = round(averages, 2)
+            filtered_player[decimal_to_percentages] = filtered_player[decimal_to_percentages].apply(lambda x: f"{x * 100:.2f}%")
+            filtered_player[percentages] = filtered_player[percentages].apply(lambda x: f"{x:.1f}")
             st.write(filtered_player.sort_values(by=["player", "season"]))
         else:
             st.write("No player found with the name:", selected_player)
     else:
+        data[decimal_to_percentages] = data[decimal_to_percentages].apply(lambda x: f"{x * 100:.2f}%")
+        data[percentages] = data[percentages].apply(lambda x: f"{x:.1f}")
         st.write(data)
 
 
