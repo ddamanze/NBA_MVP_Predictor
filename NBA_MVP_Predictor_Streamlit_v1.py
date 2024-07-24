@@ -48,14 +48,18 @@ with st.expander("Player Search"):
             averages = filtered_player.mean(numeric_only=True)
             filtered_player.loc["Average"] = averages
             averages = round(averages, 2)
-            filtered_player[decimal_to_percentages] = filtered_player[decimal_to_percentages].apply(lambda x: f"{x * 100:.2f}%")
-            filtered_player[percentages] = filtered_player[percentages].apply(lambda x: f"{x:.1f}")
+            for col in decimal_to_percentages:
+                filtered_player[col] = filtered_player[col].apply(lambda x: f"{x * 100:.2f}%")
+            for i in percentages:
+                filtered_player[col] = filtered_player[col].apply(lambda x: f"{x:.1f}")
             st.write(filtered_player.sort_values(by=["player", "season"]))
         else:
             st.write("No player found with the name:", selected_player)
     else:
-        data[decimal_to_percentages] = data[decimal_to_percentages].apply(lambda x: f"{x * 100:.2f}%")
-        data[percentages] = data[percentages].apply(lambda x: f"{x:.1f}")
+        for col in decimal_to_percentages:
+            data[col] = data[col].apply(lambda x: f"{x * 100:.2f}%")
+        for i in percentages:
+            data[col] = data[col].apply(lambda x: f"{x:.1f}")
         st.write(data)
 
 
