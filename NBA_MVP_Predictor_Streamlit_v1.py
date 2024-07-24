@@ -50,16 +50,16 @@ with st.expander("Player Search"):
             averages = round(averages, 2)
             for col in decimal_to_percentages:
                 filtered_player[col] = filtered_player[col].apply(lambda x: f"{x * 100:.2f}%")
-            for i in percentages:
-                filtered_player[col] = filtered_player[col].apply(lambda x: f"{x:.1f}")
+            #for i in percentages:
+            #    filtered_player[col] = filtered_player[col].apply(lambda x: f"{x:.1f}")
             st.write(filtered_player.sort_values(by=["player", "season"]))
         else:
             st.write("No player found with the name:", selected_player)
     else:
         for col in decimal_to_percentages:
             data[col] = data[col].apply(lambda x: f"{x * 100:.2f}%")
-        for i in percentages:
-            data[col] = data[col].apply(lambda x: f"{x:.1f}")
+        #for i in percentages:
+        #    data[col] = data[col].apply(lambda x: f"{x:.1f}")
         st.write(data)
 
 
