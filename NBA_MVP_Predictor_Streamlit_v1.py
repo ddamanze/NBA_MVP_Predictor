@@ -66,7 +66,7 @@ with st.expander("Player Search"):
 # In[5]:
 
 
-st.write(data.info())
+data.info()
 
 
 # Check for null values
