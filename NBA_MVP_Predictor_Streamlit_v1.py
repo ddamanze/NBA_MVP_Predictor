@@ -49,7 +49,7 @@ with st.expander("Player Search"):
             filtered_player.loc["Average"] = averages
             averages = round(averages, 2)
             for col in decimal_to_percentages:
-                filtered_player[col] = filtered_player[col].apply(lambda x: f"{x * 100:.2f}%")
+                filtered_player[col] = filtered_player[col].apply(lambda x: f"{x * 100:.1f}%")
             #for i in percentages:
             #    filtered_player[col] = filtered_player[col].apply(lambda x: f"{x:.1f}")
             st.write(filtered_player.sort_values(by=["player", "season"]))
@@ -816,6 +816,8 @@ with st.expander("2023-2024 Player Stats"):
 #        ppg_leader = merged_df.loc[ppg_leader_index]
 #        st.write(ppg_leader)
     
+    for col in decimal_to_percentages:
+        merged_df[col] = merged_df[col].apply(lambda x: f"{x * 100:.1f}%")
     st.write(merged_df)
 
     player1 = st.text_input('Type a player to see their compare stats')
