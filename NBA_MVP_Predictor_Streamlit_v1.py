@@ -62,7 +62,8 @@ with st.expander("Player Search"):
         #    data[col] = data[col].apply(lambda x: f"{x:.1f}")
         st.write(data)
 
-
+for i in decimal_to_percentages:
+    int(data[i])
 # In[5]:
 
 
