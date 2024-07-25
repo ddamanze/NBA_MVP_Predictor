@@ -111,7 +111,7 @@ data["was_mvp"] = data["was_mvp"].fillna(False)
 #plt.xlabel("fg_per_g")
 #plt.ylabel("fga * pct")
 #plt.show()
-np.corrcoef(data["fg_per_g"], data["fga_per_g"]* data["fg_pct"])
+#np.corrcoef(data["fg_per_g"], data["fga_per_g"]* data["fg_pct"])
 
 
 # They do, drop all columns that gives us makes per game
