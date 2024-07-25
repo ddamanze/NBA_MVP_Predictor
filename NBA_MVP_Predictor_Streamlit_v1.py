@@ -90,7 +90,7 @@ data = data.fillna(0)
 # In[8]:
 
 
-mvp = data.groupby(by = "season", as_index=False).max('award_share')
+mvp = data.loc[data.groupby('season')['award_share'].idxmax()]
 mvp["was_mvp"] = True
 
 # Merge was_mvp column into original data set. Any row not in the MVP dataset will have a value of false under "was_mvp"
