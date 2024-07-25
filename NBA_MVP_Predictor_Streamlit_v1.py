@@ -90,17 +90,16 @@ data = data.fillna(0)
 # In[8]:
 
 
-mvp = data.groupby(by = "season").max('award_share')
+mvp = data.groupby(by = "season", as_index=False).max('award_share')
 mvp["was_mvp"] = True
-st.write(mvp)#[["award_share", "was_mvp"]])
 
 # Merge was_mvp column into original data set. Any row not in the MVP dataset will have a value of false under "was_mvp"
 
 # In[9]:
 
 
-data = data.merge(mvp[["award_share", "was_mvp"]], on = ["season", "award_share"], how = "left")
-data["was_mvp"] = data["was_mvp"].fillna(value = False)
+data = data.merge(mvp[["season", "award_share", "was_mvp"]], on = ["season", "award_share"], how = "left")
+data["was_mvp"] = data["was_mvp"].fillna(False)
 
 
 # Fg per game seems repetitive when we are given fg percentage and attempts. Check to make sure they have a direct correlation
