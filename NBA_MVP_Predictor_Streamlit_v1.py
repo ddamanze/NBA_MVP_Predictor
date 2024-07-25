@@ -823,7 +823,7 @@ with st.expander("2023-2024 Player Stats"):
     
 #    for col in decimal_to_percentages:
 #        merged_df[col] = merged_df[col].apply(lambda x: f"{x * 100:.1f}%" if pd.notnull(x) else x)
-#    st.write(merged_df)
+     st.write(merged_df)
 
     player1 = st.text_input('Type a player to see their compare stats')
     player2 = st.text_input('Type a second player to compare their career stats')
