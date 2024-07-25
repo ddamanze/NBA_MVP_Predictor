@@ -92,7 +92,7 @@ data = data.fillna(0)
 
 mvp = data.groupby(by = "season").max('award_share')
 mvp["was_mvp"] = True
-st.write(mvp[["award_share", "was_mvp"]])
+st.write(mvp)#[["award_share", "was_mvp"]])
 
 # Merge was_mvp column into original data set. Any row not in the MVP dataset will have a value of false under "was_mvp"
 
